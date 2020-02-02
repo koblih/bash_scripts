@@ -1,38 +1,29 @@
 
 class Cars:
 
-    '''
-    at the start of the program display all car types with numbers
-    and ask customer to select one
-    '''
     # available car types are sedan, hatchback and SUV
-    available_cars = ['Hatchback', 'Sedan', 'SUV']
-    car_prices = {'Hatchback': 30, 'Sedan': 50, 'SUV': 100}
+    cars = {'Hatchback': 30, 'Sedan': 50, 'SUV': 100}
 
     def display_available_cars(self):
         print("These are our available cars:")
-        for car in self.available_cars:
-            print(car)
+        for key, value in  self.cars.items():
+            print(key, value)
 
-    def display_price(self, requested_car):
+    def get_price(self, requested_car):
         '''
-        after the car is selected display the price per day
-        and ask for number of days
+        get daily price for selected car
         '''
-        for key in self.car_prices:
+        for key, value in self.cars.items():
             if requested_car == key:
-                print("The price per day is: {}".format(self.car_prices[key]))
-                break
-            else:
-                print("Please try again")
-                continue
+                return value
 
-    def rent_a_car(selif, number_days):
+    def rent_a_car(selif, number_days, price, requested_car):
         '''
         display confirmation and the total price
         '''
-        print("You have rented ### car for {} days".format(number_days)) #add name of the car
-        
+        print("You have rented {} car for {} days".format(requested_car, number_days))
+        total_price = number_days * price
+        print("The total price will be: {}".format(total_price))
 
 
 class Customer:
@@ -47,7 +38,7 @@ class Customer:
 
     def request_no_days(self):
         print("Please enter the number of days you wish to rent the car for:")
-        self.no_days = input()
+        self.no_days = int(input())
         return self.no_days
 
 
@@ -55,6 +46,6 @@ cars = Cars()
 customer = Customer()
 cars.display_available_cars()
 requested_car = customer.requested_car()
-cars.display_price(requested_car)
+price = cars.get_price(requested_car)
 number_days = customer.request_no_days()
-cars.rent_a_car(number_days)
+cars.rent_a_car(number_days, price, requested_car)
